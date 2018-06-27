@@ -1,6 +1,6 @@
-# csredis 
-Ô´×÷Õß£ºhttps://github.com/ctstone/csredis
-Ö§³Ö.Net Core
+ï»¿# csredis 
+æºä½œè€…ï¼šhttps://github.com/ctstone/csredis
+æ”¯æŒ.Net Core
 ## Basic usage
 Whenever possible, server responses are mapped to the appropriate CLR type.
 ```csharp
