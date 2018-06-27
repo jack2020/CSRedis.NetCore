@@ -1,0 +1,10 @@
+/CSRedis.NetCore.Tests/obj/*.cache
+/CSRedis.NetCore.Tests/obj/Debug/netcoreapp2.1/*.cache
+/CSRedis.NetCore/obj/*.cache
+/CSRedis.NetCore/obj/Debug/netcoreapp2.1/*.cache
+/CSRedis.NetCore.Tests/obj/Debug/netcoreapp2.1/*.CopyComplete
+/CSRedis.NetCore.Tests/bin/Debug/netcoreapp2.1/*.dll
+/CSRedis.NetCore.Tests/obj/Debug/netcoreapp2.1/*.dll
+/CSRedis.NetCore/bin/Debug/netcoreapp2.1/*.dll
+/CSRedis.NetCore/obj/Debug/netcoreapp2.1/*.dll
+/.vs
