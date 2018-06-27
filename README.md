@@ -1,7 +1,6 @@
 # csredis 
-CSRedis is a .NET client for Redis and Redis Sentinel (2.8.12). Includes both synchronous and asynchronous implementations.
-
-
+源作者：https://github.com/ctstone/csredis
+支持.Net Core
 ## Basic usage
 Whenever possible, server responses are mapped to the appropriate CLR type.
 ```csharp
