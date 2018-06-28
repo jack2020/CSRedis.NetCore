@@ -8,3 +8,9 @@
 /CSRedis.NetCore/bin/Debug/netcoreapp2.1/*.dll
 /CSRedis.NetCore/obj/Debug/netcoreapp2.1/*.dll
 /.vs
+/ConsoleApp1/obj
+/ConsoleApp1/bin
+/CSRedis.NetCore/obj
+/CSRedis.NetCore/bin
+/CSRedis.NetCore.Tests/obj
+/CSRedis.NetCore.Tests/bin

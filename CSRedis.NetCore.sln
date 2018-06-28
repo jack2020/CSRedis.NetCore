@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSRedis.NetCore", "CSRedis.NetCore\CSRedis.NetCore.csproj", "{78CA19FF-AD36-49C9-A583-7B7ED2371A4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSRedis.NetCore", "CSRedis.NetCore\CSRedis.NetCore.csproj", "{78CA19FF-AD36-49C9-A583-7B7ED2371A4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSRedis.NetCore.Tests", "CSRedis.NetCore.Tests\CSRedis.NetCore.Tests.csproj", "{5DFC4638-0223-4824-8D1A-6CA37D156676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSRedis.NetCore.Tests", "CSRedis.NetCore.Tests\CSRedis.NetCore.Tests.csproj", "{5DFC4638-0223-4824-8D1A-6CA37D156676}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{F8268643-23E2-4A9B-8952-D97BD87807B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{51777B59-CEE6-4272-9C98-295F7AF2B1DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{51777B59-CEE6-4272-9C98-295F7AF2B1DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{57B71B0B-A832-40A8-9395-A797DA0F6D5C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
