@@ -205,7 +205,7 @@ namespace CSRedis.NetCore
     public class RedisMasterRole : RedisRole
     {
         readonly long _replicationOffset;
-        readonly Tuple<string, int, int>[] _slaves;
+        readonly Tuple<string, int, long>[] _slaves;
 
         /// <summary>
         /// Get the master replication offset
@@ -215,9 +215,9 @@ namespace CSRedis.NetCore
         /// <summary>
         /// Get the slaves associated with the current master
         /// </summary>
-        public Tuple<string, int, int>[] Slaves { get { return _slaves; } }
+        public Tuple<string, int, long>[] Slaves { get { return _slaves; } }
 
-        internal RedisMasterRole(string role, long replicationOffset, Tuple<string, int, int>[] slaves)
+        internal RedisMasterRole(string role, long replicationOffset, Tuple<string, int, long>[] slaves)
             : base(role)
         {
             _replicationOffset = replicationOffset;
@@ -403,7 +403,7 @@ namespace CSRedis.NetCore
             Port = info.GetInt32("port");
             RunId = info.GetString("runid");
             Flags = info.GetString("flags").Split(',');
-            PendingCommands = info.GetInt64("pending-commands");
+            PendingCommands = info.GetInt64("link-pending-commands");
             LastOkPingReply = info.GetInt64("last-ok-ping-reply");
             LastPingReply = info.GetInt64("last-ping-reply");
             DownAfterMilliseconds = info.GetInt64("down-after-milliseconds");
@@ -618,16 +618,10 @@ namespace CSRedis.NetCore
         public RedisSentinelInfo(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            SDownTime = info.GetInt64("s-down-time");
-            LastHelloMessage = info.GetInt64("last-hello-message");
+			LastHelloMessage = info.GetInt64("last-hello-message");
             VotedLeader = info.GetString("voted-leader");
             VotedLeaderEpoch = info.GetInt64("voted-leader-epoch");
         }
-
-        /// <summary>
-        /// Get or set the subjective down time
-        /// </summary>
-        public long SDownTime { get; set; }
 
         /// <summary>
         /// Get or set milliseconds(?) since last hello message from current Sentinel node
