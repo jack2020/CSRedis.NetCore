@@ -9,9 +9,9 @@ namespace CSRedis.NetCore.Internal
 {
     class RedisTransaction
     {
-        readonly RedisConnector _connector;
-        readonly RedisArray _execCommand;
-        readonly List<Tuple<string, object[]>> _pipeCommands = new List<Tuple<string, object[]>>();
+        public readonly RedisConnector _connector;
+        public readonly RedisArray _execCommand;
+        public readonly List<Tuple<string, object[]>> _pipeCommands = new List<Tuple<string, object[]>>();
 
         public event EventHandler<RedisTransactionQueuedEventArgs> TransactionQueued;
 
@@ -66,7 +66,7 @@ namespace CSRedis.NetCore.Internal
                 object[] response = _connector.EndPipe();
                 for (int i = 1; i < response.Length - 1; i++)
                     OnTransactionQueued(_pipeCommands[i - 1].Item1, _pipeCommands[i - 1].Item2, response[i - 1].ToString());
-                
+
                 object transaction_response = response[response.Length - 1];
                 if (!(transaction_response is object[]))
                     throw new RedisProtocolException("Unexpected response");

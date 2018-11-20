@@ -1,11 +1,20 @@
-﻿using CSRedis.NetCore.Internal.Commands;
+﻿using CSRedis.NetCore.Diagnostics;
+using CSRedis.NetCore.Internal;
+using CSRedis.NetCore.Internal.Commands;
+using CSRedis.NetCore.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CSRedis.NetCore
 {
     public partial class RedisClient
     {
+        /// <summary>
+        /// 诊断监听器
+        /// </summary>
+        private static readonly DiagnosticListener s_diagnosticListener =  new DiagnosticListener(CSRedisDiagnosticListenerExtensions.DiagnosticListenerName);
         /// <summary>
         /// Connect to the remote host
         /// </summary>
@@ -29,19 +38,87 @@ namespace CSRedis.NetCore
 
         T Write<T>(RedisCommand<T> command)
         {
-            if (_transaction.Active)
-                return _transaction.Write(command);
-            else if (_monitor.Listening)
-                return default(T);
-            else if (_streaming)
+          
+            bool error = false;
+            var startTime = DateTimeOffset.UtcNow;
+            var stopwatch = Stopwatch.StartNew();
+            var host = "";
+            if (_transaction._connector != null && _transaction._connector.EndPoint != null)
             {
-                _connector.Write(command);
-                return default(T);
+                host = _transaction._connector.EndPoint.ToString();
             }
-            else
-                return _connector.Call(command);
+            var commandmessage = command.ToString();
+            var operationId = Guid.NewGuid();
+            try
+            {
+                TracingBefore(host,operationId, command.Command, commandmessage);
+                if (_transaction.Active)
+                    return _transaction.Write(command);
+                else if (_monitor.Listening)
+                    return default(T);
+                else if (_streaming)
+                {
+                    _connector.Write(command);
+                    return default(T);
+                }
+                else
+                    return _connector.Call(command);
+            }
+            catch (Exception ex)
+            {
+                TracingError(host, operationId,command.Command, commandmessage, ex,startTime, stopwatch.Elapsed);
+                throw;
+            }
+            finally
+            {
+                //无错误，发送诊断信息
+                if (!error)
+                {
+                    TracingAfter(host, operationId, command.Command, commandmessage, startTime, stopwatch.Elapsed);
+                }
+                stopwatch.Stop();
+            }
+           
         }
 
+        private (Guid, TracingHeaders) TracingBefore(string host, Guid operationId, string operation, string values)
+        {
+
+            var eventData = new BrokerPublishEventData(
+                operationId,
+                operation,
+                host,
+                values,
+                DateTimeOffset.UtcNow);
+
+            s_diagnosticListener.WritePublishMessageStoreBefore(eventData);
+            return (operationId, eventData.Headers);  //if not enabled diagnostics ,the header will be null
+        }
+        private void TracingAfter(string host, Guid operationId, string operation, string values, DateTimeOffset startTime, TimeSpan du)
+        {
+            var eventData = new BrokerPublishEndEventData(
+                operationId,
+                operation,
+                host,
+                values,
+                startTime,
+                du);
+
+            s_diagnosticListener.WritePublishMessageStoreAfter(eventData);
+
+        }
+        private void TracingError(string host, Guid operationId, string operation, string values, Exception ex, DateTimeOffset startTime, TimeSpan du)
+        {
+            var eventData = new BrokerPublishErrorEventData(
+                operationId,
+                operation,
+                host,
+                values,
+                ex,
+                startTime,
+                du);
+            s_diagnosticListener.WritePublishMessageStoreError(eventData);
+        }
         #region Connection
         /// <summary>
         /// Authenticate to the server

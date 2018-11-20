@@ -15,7 +15,7 @@ namespace CSRedis.NetCore
     /// </summary>
     public class RedisConnectionPool : IDisposable
     {
-        readonly EndPoint _endPoint;
+       public  readonly EndPoint _endPoint;
         readonly SocketPool _pool;
 
         /// <summary>

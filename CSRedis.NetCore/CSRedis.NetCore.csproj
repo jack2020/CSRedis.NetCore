@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0.1</Version>
-    <Authors>andy</Authors>
-    <Description>CSRedis支持.Net Core
-https://github.com/jack2020/CSRedis.NetCore</Description>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
+  </ItemGroup>
 
 </Project>
